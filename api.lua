@@ -19,6 +19,12 @@ function areas:getAreasAtPos(pos)
 	local res = {}
 
 	if self.store then
+		-- Temporary fix for https://github.com/Mynetest/Mynetest-server/issues/58
+		if pos.x <= -2.14748e+06 or pos.x >= 2.14748e+06 or
+		   pos.y <= -2.14748e+06 or pos.y >= 2.14748e+06 or
+		   pos.z <= -2.14748e+06 or pos.z >= 2.14748e+06 then
+			return {}
+		end
 		local a = self.store:get_areas_for_pos(pos, false, true)
 		for store_id, store_area in pairs(a) do
 			local id = tonumber(store_area.data)
@@ -141,4 +147,3 @@ function areas:canInteractInArea(pos1, pos2, name, allow_open)
 	-- intersecting areas and they are all owned by the player.
 	return true
 end
-
